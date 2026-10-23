@@ -1,0 +1,50 @@
+GCU OPTION STATUS
+Version 0.2.0
+
+This document distinguishes implemented behavior from deliberate limitations. It does not claim complete GNU Coreutils compatibility.
+
+IMPLEMENTED WELL ENOUGH FOR DEVELOPMENT TESTING
+- All 110 names in commands.txt build as independent executable files. Each tiny C entry point passes a fixed command identity to the shared C++ implementation library; command behavior does not depend on argv[0].
+- Every command supports --version and command-specific --help.
+- cowf: -sa, -numb, -eqve, -she, -num, -squb, -eqvt, -T, -ipo, -v. Reads input incrementally and preserves whether each line had a newline.
+- fcow: -bef, -s literal separator, -rex regular-expression separator. Reversal requires buffering records.
+- wfof: -dec, -oct, -hex, -none, -char, -nchar, -rad, -odup. The other owner-listed typed-format options are not yet defined/implemented.
+- b32/b64: encoding and decoding. bnc currently selects Base32 or Base64.
+- rff: -wid/-gol and -prefx. Other custom flags remain undefined or unsupported.
+- pag: -len and -num/-lnum. Other custom flags remain undefined or unsupported.
+- warp: -wid, -bytes, -chars (UTF-8 code-point count, not terminal display width), -spacs.
+- ftop/fend: -n. fend follow mode is not implemented.
+- wcnt: -l, -w, -c, -m; -m is byte-based rather than Unicode character count.
+- bsum, cksm, md5c, sh1c, sh224, sh256, sh384, sh512, b2ck: dependency-free digest/checksum calculation and basic --check verification. Inputs are currently buffered in memory, so do not use for huge files.
+- ordf: -r, -u, -f, -n. Numeric mode uses floating-point parsing.
+- shufx: -n/--head-count.
+- dupf: -c, -d, -u, -i; field/character skip options are not implemented.
+- fldx: -d, -f/-c selection lists and ranges, -s, --complement, --output-delimiter. Character selection is byte-oriented.
+- chrx: -d, -s, -c and simple literal ranges. Locale classes and the full GNU translation grammar are not implemented.
+- dblk: if=, of=, bs=/ibs=/obs= (currently one shared block size), count=, skip=, seek=, conv=notrunc/sync; noerror and other GNU conversions are unsupported, and ibs/obs currently share one block size.
+- cop, movef, rom, mdir, instme, punch, truncf, lnkf, hlnk, mkq, nodef, rlnk, cpath, rdem, ulnk: common file operations, with platform/permission limitations.
+- ownf/grpown: user/group names or numeric IDs and recursive traversal.
+- permf: octal and common symbolic rwx modes; advanced copy permissions/ACL semantics are not implemented.
+- dfree/dusage/fstat/fsync: basic reporting and sync operations. Mount-table formatting and every GNU option are not implemented.
+- type: -n, -e, -E and common escapes. fprn: common safe printf conversions; %n is rejected.
+- testmp/exval: basic test expressions and integer arithmetic only.
+- idme/grps/wimlog/usrlite/usrs/huh/wami: basic account and utmpx information; output varies with host facilities.
+- wimarch/wit/hidn/wimh/ncore/mos/upsys/wimt: common Linux system queries; setting system time is intentionally not supported.
+- jroot, envx, prio, stay, tmo, sigsend, mmsleep, factr, ftgn, seqn, tmpf: common basic modes implemented; advanced GNU options may differ.
+
+KNOWN PLATFORM/SEMANTIC LIMITATIONS
+- pmad uses sourced shell functions/aliases for POSIX shells, fish, csh/tcsh, Nushell, and PowerShell. Its standalone executable cannot change the parent shell directory; see docs/pmad-shell-integration.txt.
+- ctxset/ctxrun require SELinux integration and are unavailable in this build.
+- bufctl cannot change child stdio buffering without a preload helper; it reports that limitation instead of silently running an unchanged command.
+- wipf attempts overwrite passes but cannot guarantee secure erasure on SSDs, journaled/copy-on-write filesystems, snapshots, backups, or storage with remapping.
+- nodef requires privileges for device nodes; do not test device-node creation on the host.
+- The implementation uses Linux/POSIX facilities and is not a portable replacement for every platform's core utilities.
+
+OWNER-DEFINED OPTIONS STILL NEED A FORMAL SPECIFICATION
+numl: -bsty, -nal, -non, -dnon, -num
+wfof: -byte, -type, -psbc, -sdec, -floatp, -int, -long, -short, -bbf, -hpf, -dou, -longdou
+rff: -crow, -tagpa, -sply, -uni
+pag: -col, -acr, -dou, -for, -e, -forf, -header, -j, -mer, -mar, -nfw, -char, -omh, -omt, -v
+bnc: additional encoding options
+
+Do not rely on an option that is listed as unsupported or undefined in a boot-critical or destructive script.

@@ -1,0 +1,44 @@
+PMAD SHELL INTEGRATION
+GCU 0.2.0
+
+WHY THIS IS REQUIRED
+A normal executable runs as a child process. A child process cannot change the working directory of the interactive shell that launched it. This is a process boundary, not a GCU limitation. Therefore pmad must be a function/alias evaluated by the active shell.
+
+INSTALL
+  ./install-shell-integration.sh [PREFIX]
+The default prefix is /usr/local; integration files are installed under PREFIX/share/gcu/shell. For a staging root, install the files with install-to-root.sh, which places them under /usr/share/gcu/shell in the staging tree.
+
+POSIX SHELLS
+Compatible with sh, bash, zsh, ksh, mksh, dash, BusyBox ash, and similar POSIX shells:
+  . /usr/local/share/gcu/shell/pmad.sh
+To make it permanent, add that line to the relevant startup file (for example ~/.profile or ~/.bashrc). For zsh, ~/.zshrc is a common choice.
+
+FISH
+  source /usr/local/share/gcu/shell/pmad.fish
+Add that line to ~/.config/fish/config.fish for future sessions.
+
+C SHELL / TCSH
+  source /usr/local/share/gcu/shell/pmad.csh
+Add the same line to ~/.cshrc or ~/.tcshrc.
+
+NUSHELL
+  source /usr/local/share/gcu/shell/pmad.nu
+Add that line to the Nushell config file if you want it in every session.
+
+POWERSHELL
+  . /usr/local/share/gcu/shell/pmad.ps1
+Use a dot-source statement in your PowerShell profile to persist it.
+
+USAGE
+  pmad /path/to/directory
+  pmad ..
+  pmad -
+  pmad
+  pmad --help
+  pmad --version
+No argument changes to HOME; '-' returns to the previous directory where supported by the shell's cd command. Paths containing spaces should be quoted according to the active shell's syntax.
+
+NOTES
+- The shell function/alias must be loaded in the current interactive shell. Merely putting the executable in PATH is not sufficient.
+- If `type pmad` or the shell's equivalent resolves to the external binary instead of a function/alias, source the correct integration file.
+- Shell syntax and startup-file locations vary. Only test the integration file matching the active shell; do not source a file for a different shell.

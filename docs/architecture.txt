@@ -1,0 +1,31 @@
+GCU ARCHITECTURE NOTES
+Version 0.2.0
+
+BUILD SHAPE
+- src/gcu.cpp contains command behavior and POSIX/Linux integration.
+- src/checksum.cpp contains dependency-free checksum/digest algorithms.
+- src/commands/*.cpp contains small, independent command entry points. Each embeds one fixed command name and calls the exported C ABI function gcu_run().
+- include/gcu_api.h defines that narrow C ABI.
+- src/command_help.inc contains embedded command-specific usage/description text.
+- libgcu.so is shared by the executable files to avoid copying the implementation into every command binary.
+
+WHY A SHARED LIBRARY
+A separate statically linked copy of the entire implementation in every command would waste space. The independent executables here are small and each has a fixed command identity; the implementation is stored once in libgcu.so. This is not a basename-dispatched multicall executable. The tradeoff is that the target root filesystem must contain the C/C++ runtime libraries used by the build and /lib/libgcu.so.
+
+RUNTIME LAYOUT
+  /bin/cowf
+  /bin/fcow
+  /bin/sh256
+  ...
+  /lib/libgcu.so
+
+The executable runpath is $ORIGIN/../lib, so a staged /bin command resolves /lib/libgcu.so relative to its own location.
+
+BUILD PROFILES
+- PROFILE=full builds every name in commands.txt.
+- PROFILE=minimal builds names in profiles/minimal.txt.
+- COMMANDS_FILE=/path/to/list.txt overrides the command list (unless PROFILE=minimal is selected).
+- JOBS=N controls parallel compilation of the small C entry points.
+
+SAFETY
+The install script only installs into a staging root supplied by the caller. It does not write to the host's /bin or /lib. Test filesystem-changing and privileged commands inside a disposable VM or image.

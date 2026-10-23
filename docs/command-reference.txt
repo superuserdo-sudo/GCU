@@ -1,0 +1,103 @@
+GCU COMMAND REFERENCE
+Version 0.2.0
+
+This is the GCU command inventory and a practical usage guide. All commands accept --version and --help. Options marked custom retain their Gill spellings. GNU Coreutils is a behavioral reference; GCU does not claim complete GNU compatibility.
+
+TEXT AND FILE CONTENTS
+- cowf [OPTIONS] [FILE...]: concatenate files to stdout; stdin is used if no file is given. Gill options: -sa, -numb, -eqve, -she, -num, -squb, -eqvt, -T, -ipo, -v.
+- fcow [-bef] [-rex] [-s SEPARATOR] [FILE...]: reverse records. Literal separators work; regex separator mode is limited.
+- numl [OPTIONS] [FILE...]: number lines. Basic numbering works; some custom section options are not fully specified.
+- wfof [OPTIONS] [FILE...]: display bytes as octal, decimal, hexadecimal, or characters.
+- b32 [--decode] [FILE]: Base32 encode/decode.
+- b64 [--decode] [FILE]: Base64 encode/decode.
+- bnc [--base32|--base64] [--decode] [FILE]: select an encoding and optionally decode.
+- rff [-wid N] [FILE...]: reflow words to a target width.
+- pag [-len N] [-num] [FILE...]: basic text pagination with optional line numbers.
+- warp [-bytes|-chars] [-spacs] [-wid N] [FILE...]: wrap long lines.
+- ftop [-n N] [FILE...]: print the first N lines.
+- fend [-n N] [FILE...]: print the last N lines.
+- fspl -l N INPUT [PREFIX]: split a file into chunks of N lines.
+- cspat FILE REGEX [PREFIX]: split text at matching regular-expression lines.
+- wcnt [-lwmc] [FILE...]: count lines, words, bytes, or bytes-as-characters.
+- bsum [FILE...]: BSD-style legacy checksum and 1024-byte block count.
+- cksm [FILE...]: POSIX CRC checksum, byte count, and filename.
+- md5c, sh1c, sh224, sh256, sh384, sh512, b2ck [FILE...]: digest utilities. These formats are not interchangeable; MD5 and SHA-1 are legacy only.
+
+SORTED FILES AND FIELDS
+- ordf [-r] [-u] [-f] [-n] [FILE...]: sort lines; reverse, unique, case-fold, or numeric modes are supported.
+- shufx [-n COUNT] [FILE]: shuffle input lines and optionally limit output count.
+- dupf [-c|-d|-u] [-i] [INPUT [OUTPUT]]: suppress or select adjacent duplicate lines; count and ignore-case modes are supported.
+- lcom FILE1 FILE2: compare sorted files in three-column form.
+- dtop [FILE]: topologically order dependency pairs.
+- ptix [FILE]: produce a basic keyword-in-context listing.
+- fldx [-d CHAR] [-f LIST|-c LIST] [FILE...]: select delimited fields or byte positions; ranges are partially implemented.
+- mrgc FILE...: merge corresponding lines into tab-separated columns.
+- jkey FILE1 FILE2: join records using their first whitespace-delimited field.
+- chrx [-d] [-s] SET1 [SET2]: translate, delete, or squeeze characters (character classes and full locale semantics are limited).
+- t2sp [FILE...]: convert TABs to spaces.
+- s2tb [FILE...]: convert runs of spaces to TABs using simple tab stops.
+
+DIRECTORIES AND FILES
+- see [-a] [-l] [-R] [FILE...]: list directory entries; common listing options are supported.
+- dir? [FILE...]: brief directory listing.
+- alodir? [FILE...]: detailed directory listing alias.
+- dclr [FILE]: report the current minimal directory-color configuration.
+- cop [-r] [-p] SOURCE... DEST: copy files/directories.
+- dblk if=FILE of=FILE bs=N [count=N] [skip=N] [seek=N] [conv=notrunc,sync]: block copy/convert.
+- instme [-m MODE] SOURCE... DEST: copy files and set mode.
+- movef [-f|-n] SOURCE... DEST: move or rename paths.
+- rom [-f] [-r|-R] FILE...: remove paths; refuses obvious unsafe dot/root operands.
+- wipf [-n PASSES] [-z] [-u] FILE...: attempt to overwrite regular files, optionally remove them; no secure-erasure guarantee.
+- hlnk EXISTING NEWLINK: create hard link.
+- lnkf TARGET LINK: create symbolic link.
+- mdir [-p] [-m MODE] DIRECTORY...: create directories.
+- mkq NAME...: create named pipes.
+- nodef NAME TYPE [MAJOR MINOR]: create FIFO/device nodes where permissions allow.
+- rlnk FILE...: print symbolic link targets.
+- cpath PATH...: resolve canonical paths.
+- rdem DIRECTORY...: remove empty directories.
+- ulnk FILE: remove one directory entry.
+- ownf OWNER[:GROUP] FILE...: change ownership (privileges required).
+- grpown GROUP FILE...: change group ownership (privileges required).
+- permf MODE FILE...: change numeric or symbolic permissions.
+- punch [-c] FILE...: create files or update timestamps.
+- dfree [-h|-k|-m] [PATH...]: report filesystem space.
+- dusage [-s] [-h] [-a] [-d DEPTH] [PATH...]: estimate file/directory space.
+- fstat FILE...: display file metadata.
+- fsync [FILE...]: flush all buffers or sync specified files.
+- truncf -s SIZE FILE: resize a file; decimal K/M/G and binary KiB/MiB/GiB suffixes are accepted.
+
+OUTPUT, CONDITIONS, AND PATHS
+- type [-n] [-e|-E] [TEXT...]: echo-like output.
+- fprn FORMAT [ARG...]: printf-like formatting for a safe conversion subset; %n is rejected.
+- no! [STRING...]: repeatedly print the Gill yes-response.
+- true, false: return success or failure.
+- testmp EXPRESSION: evaluate a basic shell-test expression; shell bracket syntax is not implemented.
+- exval INTEGER OP INTEGER: evaluate a simple integer expression.
+- mout [-a] [FILE...]: copy stdin to stdout and files.
+- mbn NAME [SUFFIX]: remove path prefixes and an optional suffix.
+- mdn NAME: print the directory portion of a path.
+- pchk NAME...: perform basic pathname validation.
+
+PROCESS, USER, AND SYSTEM
+- jroot ROOT COMMAND [ARG...]: change root and execute a command (privileged; use only in a disposable root).
+- envx [NAME=VALUE...] [COMMAND [ARG...]]: set environment values and run a command, or print environment.
+- envshow [VARIABLE...]: print environment variables.
+- prio [-n ADJUSTMENT] COMMAND [ARG...]: adjust niceness and execute.
+- stay COMMAND [ARG...]: run a command ignoring SIGHUP; output handling is simplified.
+- wai: print current working directory.
+- ttycfg [SETTING...]: inspect/change supported terminal settings; support is limited.
+- bufctl MODE COMMAND [ARG...]: buffering control is not fully implemented.
+- idme [OPTIONS] [USER], grps [USER], wimlog, usrlite [USER], usrs, huh, wami: user/group/session information.
+- wimarch, wit [+FORMAT], hidn, wimh, ncore, mos, upsys, wimt: architecture, date, host ID, hostname, processor count, system information, uptime, and terminal name.
+- ctxset / ctxrun: SELinux context operations are unavailable in this build.
+- tmo DURATION COMMAND [ARG...]: run a command with a time limit.
+- sigsend [-SIGNAL] PID...: send a signal to processes.
+- mmsleep NUMBER: pause for a duration.
+- factr NUMBER...: print prime factors.
+- ftgn NUMBER...: basic numeric formatting.
+- seqn [-s SEP] [-f FORMAT] LAST | FIRST LAST | FIRST STEP LAST: print a numeric sequence.
+- tmpf [-d] [TEMPLATE]: safely create a temporary file or directory.
+- pmad: source the matching shell integration from share/gcu/shell; the standalone executable explains this limitation.
+
+For details on option status, custom flags, and limitations, read option-status.txt.
