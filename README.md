@@ -66,3 +66,8 @@ IMPORTANT LIMITATIONS
 
 Project reference:
   https://www.gnu.org/software/coreutils/manual/coreutils.html
+### to build
+'
+./build.sh
+
+'
