@@ -35,8 +35,8 @@ chrx
 t2sp
 s2tb
 see
-dir?
-alodir?
+dir
+alodir
 dclr
 cop
 dblk
@@ -64,7 +64,7 @@ fsync
 truncf
 type
 fprn
-no!
+no
 true
 false
 testmp
@@ -107,4 +107,4 @@ tmpf
 envshow
 pmad
 dumpme
-yes!
+yes
